@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>حضانة سنابل | لوحة المعلمة</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f8f5;--paper:#fff;--ink:#243a35;--muted:#73817b;--green:#287968;--green2:#e6f3ee;--line:#e4ebe6;--orange:#f2a36f;--orange2:#fff0e5;--blue:#e8f1fb;--red:#b94b4b;--shadow:0 12px 34px #23483b0c}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Cairo,Tahoma,sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer}.hidden{display:none!important}
+.login-wrap{min-height:100vh;display:grid;grid-template-columns:1.1fr .9fr;max-width:1200px;margin:auto;padding:30px;gap:24px;align-items:center}
+.welcome{padding:40px}.brand{display:flex;align-items:center;gap:12px;font-weight:800;font-size:25px;color:var(--green)}.brand-mark{display:grid;place-items:center;width:52px;height:52px;background:var(--green2);border-radius:18px;font-size:28px}
+.welcome h1{font-size:clamp(30px,4vw,48px);line-height:1.35;margin:26px 0 12px}.welcome p{color:var(--muted);line-height:2;font-size:17px;max-width:500px}.welcome-art{margin-top:35px;background:linear-gradient(135deg,#e2f1e9,#fdf0df);border-radius:28px;min-height:190px;display:flex;align-items:center;justify-content:center;font-size:74px;gap:16px}
+.login-card{background:var(--paper);border:1px solid var(--line);border-radius:28px;padding:34px;box-shadow:var(--shadow);max-width:450px;width:100%;margin:auto}.login-card h2{margin:0 0 6px;font-size:25px}.sub{color:var(--muted);font-size:14px;margin:0 0 25px}
+.field{display:flex;flex-direction:column;gap:7px;margin:16px 0}.field label{font-weight:700;font-size:14px}.field input,.field select,.field textarea{width:100%;border:1px solid var(--line);background:#fbfcfb;border-radius:13px;padding:12px 14px;outline:none;color:var(--ink)}.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--green);box-shadow:0 0 0 3px #28796815}
+.btn{border:0;border-radius:13px;padding:12px 18px;font-weight:700;background:var(--green);color:white}.btn.full{width:100%;margin-top:10px;padding:14px}.btn.secondary{background:var(--green2);color:var(--green)}.btn.orange{background:var(--orange2);color:#96562c}.btn.danger{background:#fff0f0;color:#a33d3d}.btn:disabled{opacity:.45;cursor:not-allowed}
+.login-error{color:var(--red);font-size:13px;min-height:20px}.demo-note{background:#f7f8f7;border-radius:12px;padding:10px 12px;color:var(--muted);font-size:12px;margin-top:18px;line-height:1.8}
+.app{max-width:1280px;margin:auto;padding:24px}.topbar{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:25px}.topbar .brand{font-size:22px}.profile{display:flex;align-items:center;gap:10px;background:var(--paper);border:1px solid var(--line);padding:8px 13px;border-radius:15px}.profile small{display:block;color:var(--muted)}.avatar{width:42px;height:42px;border-radius:14px;background:var(--green2);display:grid;place-items:center;font-size:22px}
+.page-title{display:flex;justify-content:space-between;align-items:end;gap:12px;margin:8px 0 20px}.page-title h1{font-size:29px;margin:0}.page-title p{margin:4px 0 0;color:var(--muted)}.date-pill{background:var(--paper);border:1px solid var(--line);border-radius:13px;padding:9px 12px;color:var(--muted);font-size:14px}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:22px;margin-bottom:18px}.panel h2{margin:0 0 5px;font-size:21px}.desc{color:var(--muted);margin:0 0 18px;font-size:14px;line-height:1.9}.setup-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.camera-box{border:2px dashed #cbdcd2;border-radius:18px;padding:18px;text-align:center;background:#fbfdfb}.selfie-preview{width:150px;height:150px;object-fit:cover;border-radius:28px;background:var(--green2);display:block;margin:0 auto 12px}.selfie-placeholder{width:150px;height:150px;border-radius:28px;background:var(--green2);display:grid;place-items:center;font-size:55px;margin:0 auto 12px}.check-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.check-option{display:flex;align-items:center;gap:9px;background:#fbfcfb;border:1px solid var(--line);border-radius:12px;padding:11px}.check-option input{accent-color:var(--green);width:18px;height:18px}.summary-list{display:grid;gap:9px}.summary-row{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--line)}.summary-row span:first-child{color:var(--muted)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-bottom:22px}.stat{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:16px;display:flex;align-items:center;gap:12px}.stat-icon{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;font-size:22px;background:var(--green2)}.stat:nth-child(2) .stat-icon{background:var(--blue)}.stat:nth-child(3) .stat-icon{background:var(--orange2)}.stat:nth-child(4) .stat-icon{background:#f4e9f7}.stat strong{display:block;font-size:25px}.stat small{color:var(--muted)}
+.tabs{display:flex;gap:8px;background:#eaf0ec;padding:6px;border-radius:16px;margin:22px 0}.tab{border:0;flex:1;border-radius:12px;background:transparent;color:var(--muted);padding:12px 10px;font-weight:700}.tab.active{background:white;color:var(--green);box-shadow:0 3px 12px #23483b0d}
+.children{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}.child{background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:16px;position:relative;box-shadow:var(--shadow);min-width:0}.child-top{display:flex;align-items:center;gap:12px;margin-bottom:14px}.child-photo{width:62px;height:62px;flex-shrink:0;border-radius:19px;display:grid;place-items:center;font-size:32px;background:linear-gradient(135deg,#e1f0e7,#fff0df)}.child h3{margin:0;font-size:17px}.age{font-size:12px;color:var(--muted);margin-top:3px}.allergy{display:inline-flex;align-items:center;gap:5px;background:var(--orange2);color:#97572d;border-radius:9px;padding:5px 8px;font-size:12px;margin-bottom:13px}.no-allergy{background:#f2f6f3;color:#64746c}.status{font-size:12px;color:var(--muted);margin:7px 0 12px;line-height:1.8}.child-actions{display:flex;gap:7px}.small-btn{flex:1;border:1px solid var(--line);background:#fff;border-radius:10px;padding:9px 5px;font-size:12px;font-weight:700;color:var(--ink)}.small-btn.active{background:var(--green2);border-color:#c5e5d8;color:var(--green)}.small-btn.out{background:var(--orange2);border-color:#f8d5bb;color:#96562c}
+.activity-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.activity{border:1px solid var(--line);border-radius:15px;padding:15px 12px;background:white;text-align:center;color:var(--ink)}.activity .emoji{display:block;font-size:28px;margin-bottom:8px}.activity.active{border:2px solid var(--green);background:var(--green2);color:var(--green)}.live-badge{display:inline-flex;align-items:center;gap:7px;background:#e6f6ec;color:#24764d;border-radius:30px;padding:6px 11px;font-size:12px;font-weight:800}.live-dot{width:8px;height:8px;border-radius:50%;background:#28a15e;box-shadow:0 0 0 4px #28a15e20}.empty{padding:30px;text-align:center;color:var(--muted)}.footer-note{color:var(--muted);font-size:12px;text-align:center;margin:28px 0 10px}.logout{background:transparent;color:var(--muted);border:0;font-size:13px;margin-right:8px}
+.overlay{position:fixed;inset:0;background:#14241f80;display:flex;align-items:center;justify-content:center;padding:18px;z-index:20}.modal{background:white;width:min(560px,100%);max-height:90vh;overflow:auto;border-radius:24px;padding:24px;box-shadow:0 24px 80px #0002}.modal h2{margin:0 0 8px}.modal p{color:var(--muted);line-height:1.8}.modal-actions{display:flex;gap:10px;margin-top:20px}.modal-actions button{flex:1}.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#203c34;color:white;padding:12px 20px;border-radius:13px;box-shadow:var(--shadow);z-index:40;max-width:90%;text-align:center}
+@media(max-width:850px){.login-wrap{grid-template-columns:1fr;padding:18px}.welcome{padding:15px}.welcome-art{min-height:120px;font-size:50px;margin-top:15px}.login-card{max-width:none}.app{padding:15px}.children{grid-template-columns:repeat(2,minmax(0,1fr))}.stats{grid-template-columns:repeat(2,1fr)}.activity-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.topbar{align-items:flex-start}.topbar .brand{font-size:18px}.profile{padding:6px}.page-title{align-items:flex-start;flex-direction:column}.setup-grid{grid-template-columns:1fr}.children{gap:9px}.child{padding:11px}.child-photo{width:48px;height:48px;font-size:25px;border-radius:15px}.child h3{font-size:15px}.child-actions{flex-direction:column}.stats{gap:8px}.stat{padding:11px;gap:8px}.stat-icon{width:36px;height:36px}.stat strong{font-size:21px}.tabs{gap:4px}.tab{font-size:12px;padding:10px 4px}.modal-actions{flex-direction:column}.check-list{grid-template-columns:1fr}}
+
+/* Playful visual identity + fixed teacher navigation */
+:root{--bg:#fff9f1;--paper:#ffffff;--ink:#39354f;--muted:#858198;--green:#5475d8;--green2:#edf0ff;--line:#ece7f4;--orange:#ffb46f;--orange2:#fff1df;--blue:#e7f6ff;--red:#c44c68;--shadow:0 12px 34px #55468c0d}
+body{background:#fff9f1;color:var(--ink)}
+.brand-mark{background:#e8f8e9;border-radius:18px}
+.btn{background:#6679dc}.btn.secondary{background:#eef0ff;color:#5265c3}.btn.orange{background:#fff0dc;color:#a45c28}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:#8b8ce8;box-shadow:0 0 0 3px #8b8ce81c}
+.check-option{background:#fffdf9}.check-option input{accent-color:#697be0}
+.panel{border-color:#eee7f6;box-shadow:0 8px 26px #55468c08}
+.app-shell{max-width:none;width:100%;min-height:100vh;margin:0;padding:0;display:grid;grid-template-columns:258px minmax(0,1fr);gap:0;background:#fff9f1}
+.app-shell.hidden{display:none!important}
+.sidebar{position:sticky;top:0;height:100vh;min-height:650px;padding:25px 17px 18px;background:#fff;border-left:1px solid #eee8f6;display:flex;flex-direction:column;z-index:5}
+.sidebar-brand{display:flex;align-items:center;gap:11px;padding:2px 8px 27px}.sidebar-brand .brand-mark{width:48px;height:48px;display:grid;place-items:center;font-size:27px;flex-shrink:0}.sidebar-brand b{display:block;font-size:18px;font-weight:800;color:#4c4e9c}.sidebar-brand small{display:block;font-size:11px;color:#a29bb7;margin-top:2px}
+.sidebar-label{font-size:11px;font-weight:800;color:#aaa3bd;padding:0 12px 10px}.side-nav{display:grid;gap:7px}.side-link{display:flex;align-items:center;gap:11px;width:100%;padding:12px 11px;border:1px solid transparent;border-radius:15px;background:transparent;text-align:right;color:#77748f;font-weight:700;font-size:13px;transition:.15s}.side-link:hover{background:#faf7ff}.side-link.active{background:#f0efff;color:#545ab7;border-color:#e5e2ff;box-shadow:0 5px 14px #7b72d40b}.nav-emoji{width:34px;height:34px;display:grid;place-items:center;border-radius:11px;background:#fff;font-size:18px;flex-shrink:0}.side-link:nth-child(1) .nav-emoji{background:#fff0d8}.side-link:nth-child(2) .nav-emoji{background:#e4f8ed}.side-link:nth-child(3) .nav-emoji{background:#ffe9f1}.side-link:nth-child(4) .nav-emoji{background:#e4f4ff}.nav-arrow{margin-right:auto;font-size:22px;opacity:.65}.sidebar-spacer{flex:1;min-height:22px}.sidebar-help{display:flex;align-items:flex-start;gap:9px;padding:13px 11px;border-radius:15px;background:#fff6e8;border:1px solid #ffebcc;margin:10px 0 17px}.sidebar-help>span{font-size:22px}.sidebar-help b,.sidebar-help small{display:block}.sidebar-help b{font-size:12px;color:#8d6435}.sidebar-help small{font-size:10px;line-height:1.8;color:#9a805e;margin-top:3px}.sidebar-profile{display:flex;align-items:center;gap:10px;padding:12px 5px 13px;border-top:1px solid #f0ebf6}.sidebar-avatar{width:42px;height:42px;display:grid;place-items:center;background:#ffe9f1;border-radius:14px;font-size:22px}.sidebar-person{min-width:0}.sidebar-person b,.sidebar-person small{display:block}.sidebar-person b{font-size:13px}.sidebar-person small{font-size:11px;color:#9891aa;margin-top:2px}.side-action{width:100%;text-align:right;border:0;background:#f8f6ff;color:#6c65a6;border-radius:11px;padding:10px 12px;font-size:12px;font-weight:700;margin-top:6px}.logout-action{background:#fff4f4;color:#b86b7c}
+.app-main{min-width:0;padding:28px clamp(18px,3vw,42px) 20px;max-width:1600px;width:100%;margin:0 auto}.app-header{display:flex;justify-content:space-between;align-items:center;gap:18px;margin-bottom:25px}.app-header h1{font-size:clamp(24px,2.5vw,34px);line-height:1.4;margin:8px 0 3px;color:#373653}.app-header p{margin:0;color:#8a849e;font-size:13px}.hello-chip{display:inline-flex;align-items:center;gap:6px;padding:6px 11px;border-radius:30px;background:#fff0d9;color:#a16a2d;font-size:11px;font-weight:800}.header-date{display:flex;align-items:center;gap:10px;background:white;border:1px solid #f0e8f5;border-radius:16px;padding:11px 15px;min-width:170px;box-shadow:0 6px 20px #55468c07}.header-date>span{font-size:24px}.header-date small,.header-date b{display:block}.header-date small{font-size:10px;color:#aaa2ba}.header-date b{font-size:12px;margin-top:3px;color:#625b83}.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:28px}.stat{position:relative;overflow:hidden;border:1px solid transparent;border-radius:21px;padding:18px 16px;gap:12px;box-shadow:none;min-width:0}.stat-purple{background:#f0efff;border-color:#e7e4ff}.stat-mint{background:#e9f9ee;border-color:#ddf2e4}.stat-peach{background:#fff1e5;border-color:#ffe7d3}.stat-blue{background:#eaf6ff;border-color:#deeffb}.stat-icon{width:46px;height:46px;flex-shrink:0;border-radius:16px;display:grid;place-items:center;font-size:23px;background:#fff}.stat:nth-child(n) .stat-icon{background:#ffffffbd}.stat strong{display:block;font-size:27px;line-height:1.2;color:#45415e}.stat small{display:block;color:#8b849e;font-size:11px;margin-top:5px;white-space:nowrap}.stat-decoration{position:absolute;left:12px;top:8px;color:#b8b2ef;font-size:18px}.section-heading{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:13px}.section-heading>div{display:flex;align-items:center;gap:10px}.heading-sparkle{display:grid;place-items:center;width:40px;height:40px;border-radius:14px;background:#fff0d9;font-size:22px}.section-heading h2{font-size:18px;margin:0;color:#403c5c}.section-heading p{font-size:12px;color:#9891aa;margin:3px 0 0}.class-chip{background:white;border:1px solid #eee7f5;color:#777096;border-radius:12px;padding:9px 12px;font-size:12px;font-weight:700;white-space:nowrap}
+#tabContent .panel{padding:22px;border-radius:22px}#tabContent .panel h2{font-size:19px;color:#45415e}#tabContent .desc{font-size:12px}#tabContent .child{border-color:#eee8f5;border-radius:19px;box-shadow:0 7px 22px #59488c08}#tabContent .child-photo{background:linear-gradient(135deg,#e7e6ff,#ffe9d7)}#tabContent .child h3{color:#45415e}#tabContent .allergy{background:#fff0dd;color:#a3662e}#tabContent .allergy.no-allergy{background:#e8f8ec;color:#43845b}#tabContent .btn{background:#6878dc}#tabContent .btn.secondary{background:#eef0ff;color:#5c66bf}#tabContent .small-btn.active{background:#eef0ff;color:#5c66bf;border-color:#dcdfff}.tabs{display:none!important}.side-link:focus-visible,.side-action:focus-visible,.btn:focus-visible{outline:3px solid #aaa9ff;outline-offset:2px}
+@media(max-width:1000px){.app-shell{grid-template-columns:220px minmax(0,1fr)}.sidebar{padding:20px 12px}.sidebar-brand{padding-right:4px;padding-left:4px}.sidebar-brand b{font-size:16px}.app-main{padding:22px 18px}.stats{gap:9px}.stat{padding:14px 11px;gap:8px}.stat-icon{width:38px;height:38px}.stat strong{font-size:23px}.stat small{font-size:10px}}
+@media(max-width:720px){.app-shell{display:flex;flex-direction:column}.sidebar{position:relative;top:auto;height:auto;min-height:0;padding:12px 14px 10px;border-left:0;border-bottom:1px solid #eee8f6}.sidebar-brand{padding:0 2px 12px}.sidebar-brand .brand-mark{width:40px;height:40px;font-size:23px}.sidebar-brand b{font-size:16px}.sidebar-label,.sidebar-spacer,.sidebar-help,.sidebar-profile,.side-action{display:none}.side-nav{display:flex;gap:7px;overflow-x:auto;padding:0 0 3px}.side-link{min-width:max-content;width:auto;padding:7px 10px;gap:6px;font-size:11px}.nav-emoji{width:28px;height:28px;font-size:15px}.nav-arrow{display:none}.app-main{padding:19px 13px}.app-header{align-items:flex-start;flex-direction:column;margin-bottom:18px}.header-date{min-width:0;padding:8px 11px}.stats{grid-template-columns:repeat(2,minmax(0,1fr));margin-bottom:22px}.stat{border-radius:17px}.stat strong{font-size:24px}.section-heading h2{font-size:16px}.section-heading p{max-width:230px;line-height:1.8}.class-chip{font-size:10px;padding:8px}.children{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:420px){.side-link{flex:1;min-width:0;justify-content:center;flex-direction:column;padding:7px 3px;gap:3px}.side-link span:nth-child(2){font-size:10px}.children{grid-template-columns:1fr}.stat{padding:12px 10px}.stat small{white-space:normal}.app-header h1{font-size:25px}}
+
+</style>
+</head>
+<body>
+<section id="loginScreen" class="login-wrap">
+ <div class="welcome">
+  <div class="brand"><span class="brand-mark">🌱</span><span>حضانة سنابل</span></div>
+  <h1>يوم مليان تعلُّم<br>ولعب واهتمام</h1>
+  <p>لوحة المعلمة اليومية لتنظيم الحضور والأنشطة والانصراف، ومتابعة كل طفل بسهولة.</p>
+  <div class="welcome-art"><span>🧸</span><span>🌼</span><span>🎨</span><span>📚</span></div>
+ </div>
+ <form id="loginForm" class="login-card">
+  <h2>تسجيل دخول المعلمة</h2><p class="sub">أهلًا بيكي في لوحة تشغيل حضانة سنابل</p>
+  <div class="field"><label for="username">اسم المستخدم</label><input id="username" autocomplete="username" placeholder="اكتبي اسم المستخدم" required></div>
+  <div class="field"><label for="password">كلمة المرور</label><input id="password" type="password" autocomplete="current-password" placeholder="اكتبي كلمة المرور" required></div>
+  <div id="loginError" class="login-error"></div><button class="btn full" type="submit">دخول إلى لوحة المعلمة ←</button>
+  <div class="demo-note">بيانات الدخول التجريبية<br>اسم المستخدم: <b>Fatima</b> أو <b>فاطمة</b><br>كلمة المرور: <b>02082000</b><br>ملاحظة: تسجيل الدخول في هذه النسخة للعرض فقط، وليس حماية حقيقية.</div>
+ </form>
+</section>
+
+<section id="setupScreen" class="app hidden">
+ <header class="topbar"><div class="brand"><span class="brand-mark">🌱</span><span>حضانة سنابل</span></div><div class="profile"><span class="avatar">👩🏻‍🏫</span><div><b>أ. فاطمة</b><small>تجهيز اليوم</small></div><button id="setupLogout" class="logout">خروج</button></div></header>
+ <div class="page-title"><div><h1>تجهيز يومك يا فاطمة 👋</h1><p>راجعي بيانات اليوم قبل الدخول إلى لوحة تشغيل الفصل.</p></div><div class="date-pill" id="setupDateLabel"></div></div>
+ <form id="setupForm">
+  <div class="panel">
+   <h2>1. سيلفي المعلمة داخل الفصل</h2><p class="desc">التقطي صورة أثناء وجودك داخل الفصل. في النظام الفعلي ستُرسل الصورة للإدارة فقط، ولن تظهر لأولياء الأمور.</p>
+   <div class="setup-grid">
+    <div class="camera-box"><div id="selfiePlaceholder" class="selfie-placeholder">🤳🏻</div><img id="selfiePreview" class="selfie-preview hidden" alt="معاينة سيلفي المعلمة"><input id="selfieInput" type="file" accept="image/*" capture="user" class="hidden"><button type="button" id="takeSelfie" class="btn secondary">التقاط سيلفي / اختيار صورة</button><p class="desc" style="margin:12px 0 0">الصورة تجريبية ومحفوظة داخل هذا المتصفح فقط.</p></div>
+    <div>
+     <div class="field"><label for="classSelect">2. تحديد الفصل</label><select id="classSelect" required><option value="">اختاري الفصل</option><option>البراعم</option><option>النجوم</option><option>الفراشات</option></select></div>
+     <div class="field"><label for="dayDate">3. تاريخ اليوم</label><input id="dayDate" type="date" required></div>
+     <div class="field"><label>4. مواد التدريس (اختاري مادة أو أكثر)</label><div class="check-list" id="subjectsList">
+      <label class="check-option"><input type="checkbox" value="لغة عربية"> لغة عربية</label>
+      <label class="check-option"><input type="checkbox" value="لغة إنجليزية"> لغة إنجليزية</label>
+      <label class="check-option"><input type="checkbox" value="رياضيات"> رياضيات</label>
+      <label class="check-option"><input type="checkbox" value="اكتشاف وعلوم"> اكتشاف وعلوم</label>
+      <label class="check-option"><input type="checkbox" value="فنون وأشغال"> فنون وأشغال</label>
+      <label class="check-option"><input type="checkbox" value="مهارات حياتية"> مهارات حياتية</label>
+     </div></div>
+    </div>
+   </div>
+   <button class="btn full" type="submit">تأكيد البيانات ومراجعتها</button>
+  </div>
+ </form>
+</section>
+
+<section id="appScreen" class="app app-shell hidden">
+ <aside class="sidebar">
+  <div class="sidebar-brand"><span class="brand-mark">🌱</span><div><b>حضانة سنابل</b><small>نزرع الفرح كل يوم</small></div></div>
+  <div class="sidebar-label">مساحة المعلمة</div>
+  <nav class="side-nav" aria-label="أقسام المعلمة">
+   <button class="side-link active" data-tab="children"><span class="nav-emoji">🧸</span><span>الأطفال</span><span class="nav-arrow">‹</span></button>
+   <button class="side-link" data-tab="attendance"><span class="nav-emoji">🌈</span><span>الحضور والغياب</span><span class="nav-arrow">‹</span></button>
+   <button class="side-link" data-tab="activities"><span class="nav-emoji">🎨</span><span>الأنشطة اليومية</span><span class="nav-arrow">‹</span></button>
+   <button class="side-link" data-tab="dismissal"><span class="nav-emoji">🎒</span><span>انصراف الأطفال</span><span class="nav-arrow">‹</span></button>
+  </nav>
+  <div class="sidebar-spacer"></div>
+  <div class="sidebar-help"><span>💡</span><div><b>تذكير صغير</b><small>راجعي تنبيهات الحساسية قبل تقديم الوجبات.</small></div></div>
+  <div class="sidebar-profile"><span class="sidebar-avatar">👩🏻‍🏫</span><div class="sidebar-person"><b>أ. فاطمة</b><small id="sessionMeta">معلمة فصل</small></div></div>
+  <button id="editSetup" class="side-action">⚙️ تعديل بيانات اليوم</button>
+  <button id="logoutBtn" class="side-action logout-action">↪ تسجيل الخروج</button>
+ </aside>
+ <main class="app-main">
+  <header class="app-header"><div><div class="hello-chip">☀️ يوم جميل في سنابل</div><h1>أهلًا بيكي يا فاطمة!</h1><p id="appSubtitle">خلّي يوم الأطفال مليان تعلُّم ولعب واهتمام.</p></div><div class="header-date"><span>📅</span><div><small>تاريخ اليوم</small><b id="todayLabel"></b></div></div></header>
+  <section class="stats">
+   <div class="stat stat-purple"><span class="stat-icon">🧒</span><div><strong id="totalCount">0</strong><small>أطفال الفصل</small></div><span class="stat-decoration">✦</span></div>
+   <div class="stat stat-mint"><span class="stat-icon">🌞</span><div><strong id="presentCount">0</strong><small>حضروا النهارده</small></div><span class="stat-decoration">✦</span></div>
+   <div class="stat stat-peach"><span class="stat-icon">🚌</span><div><strong id="waitingCount">0</strong><small>لسه موصلوش</small></div><span class="stat-decoration">✦</span></div>
+   <div class="stat stat-blue"><span class="stat-icon">🎒</span><div><strong id="leftCount">0</strong><small>انصرفوا بأمان</small></div><span class="stat-decoration">✦</span></div>
+  </section>
+  <div class="section-heading"><div><span class="heading-sparkle">✨</span><div><h2>متابعة يوم الفصل</h2><p>اختاري القسم اللي محتاجة تشتغلي عليه.</p></div></div><span class="class-chip" id="classChip">🏡 الفصل</span></div>
+  <section id="tabContent"></section>
+  <p class="footer-note">🌱 حضانة سنابل — نموذج استعراضي أولي. البيانات والصور والرموز تجريبية ومحلية.</p>
+ </main>
+</section>
+
+<div id="modalRoot"></div><div id="toast" class="toast hidden" role="status"></div>
+<script>
+const DEMO_USER='fatima',DEMO_PASS='02082000';
+const childrenByClass={
+ 'البراعم':[
+  {id:'c1',name:'آدم محمد',years:3,months:4,emoji:'👦🏻',allergy:'لا يوجد',guardian:'منى حسن (الأم)',otp:'4821'},
+  {id:'c2',name:'ليلى أحمد',years:3,months:8,emoji:'👧🏻',allergy:'البيض',guardian:'سامي أحمد (الأب)',otp:'3174'},
+  {id:'c3',name:'يوسف علي',years:4,months:1,emoji:'👦🏽',allergy:'لا يوجد',guardian:'هبة علي (الأم)',otp:'5290'},
+  {id:'c4',name:'مريم خالد',years:3,months:10,emoji:'👧🏽',allergy:'الفول السوداني',guardian:'خالد محمود (الأب)',otp:'6812'},
+  {id:'c5',name:'عمر حسن',years:4,months:2,emoji:'👦🏻',allergy:'الحليب',guardian:'سارة حسن (الأم)',otp:'7406'},
+  {id:'c6',name:'سلمى محمود',years:3,months:2,emoji:'👧🏼',allergy:'لا يوجد',guardian:'محمود سامي (الأب)',otp:'2538'},
+  {id:'c7',name:'نور أحمد',years:4,months:5,emoji:'👧🏻',allergy:'لا يوجد',guardian:'داليا أحمد (الأم)',otp:'9163'},
+  {id:'c8',name:'حمزة سامي',years:3,months:6,emoji:'👦🏽',allergy:'لا يوجد',guardian:'سامي حسن (الأب)',otp:'8057'}],
+ 'النجوم':[
+  {id:'c9',name:'سيف أحمد',years:5,months:1,emoji:'👦🏻',allergy:'لا يوجد',guardian:'أحمد سيف (الأب)',otp:'4821'},
+  {id:'c10',name:'دانة علي',years:5,months:3,emoji:'👧🏻',allergy:'البيض',guardian:'علي محمد (الأب)',otp:'3174'},
+  {id:'c11',name:'إياد حسن',years:5,months:6,emoji:'👦🏽',allergy:'لا يوجد',guardian:'هند حسن (الأم)',otp:'5290'},
+  {id:'c12',name:'لارا محمد',years:4,months:9,emoji:'👧🏼',allergy:'لا يوجد',guardian:'محمد عادل (الأب)',otp:'6812'}],
+ 'الفراشات':[
+  {id:'c13',name:'تيم خالد',years:2,months:4,emoji:'👦🏻',allergy:'لا يوجد',guardian:'خالد تيم (الأب)',otp:'4821'},
+  {id:'c14',name:'ريم سامي',years:2,months:9,emoji:'👧🏻',allergy:'الحليب',guardian:'منى سامي (الأم)',otp:'3174'},
+  {id:'c15',name:'أنس محمود',years:2,months:2,emoji:'👦🏽',allergy:'لا يوجد',guardian:'محمود أنس (الأب)',otp:'5290'},
+  {id:'c16',name:'جود حسن',years:2,months:7,emoji:'👧🏼',allergy:'لا يوجد',guardian:'هالة حسن (الأم)',otp:'6812'}]
+};
+const activityOptions=[
+ {id:'meal',emoji:'🍎',label:'يتناول الوجبة الآن'},
+ {id:'water',emoji:'🥤',label:'يشرب الماء الآن'},
+ {id:'lesson',emoji:'📚',label:'يشارك في الدرس الآن'},
+ {id:'play',emoji:'🧩',label:'يلعب الآن'},
+ {id:'art',emoji:'🎨',label:'يمارس نشاطًا فنيًا الآن'},
+ {id:'bathroom',emoji:'🚻',label:'في الحمام الآن'},
+ {id:'nap',emoji:'😴',label:'وقت القيلولة الآن'},
+ {id:'outdoor',emoji:'🌳',label:'في النشاط الخارجي الآن'},
+ {id:'done',emoji:'⭐',label:'أنهى النشاط بنجاح'}
+];
+const state={tab:'children',setup:{selfie:'',className:'',date:'',subjects:[]},statuses:{},statusTimes:{},activities:{},dismissed:{},modalChild:null};
+const $=s=>document.querySelector(s);
+const todayISO=()=>{const d=new Date();return new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,10)};
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const activeChildren=()=>childrenByClass[state.setup.className]||[];
+const dayKey=()=>`${state.setup.date}|${state.setup.className}`;
+function loadDay(){try{return JSON.parse(localStorage.getItem('snabel_teacher_'+dayKey()))||{statuses:{},statusTimes:{},activities:{},dismissed:{}}}catch{return {statuses:{},statusTimes:{},activities:{},dismissed:{}}}}
+function saveDay(){try{localStorage.setItem('snabel_teacher_'+dayKey(),JSON.stringify({statuses:state.statuses,statusTimes:state.statusTimes,activities:state.activities,dismissed:state.dismissed}))}catch{}}
+function setUpDefault(){if(!$('#dayDate').value)$('#dayDate').value=todayISO();$('#setupDateLabel').textContent=new Date($('#dayDate').value+'T12:00:00').toLocaleDateString('ar-EG',{weekday:'long',day:'numeric',month:'long',year:'numeric'})}
+function getSubjects(){return [...document.querySelectorAll('#subjectsList input:checked')].map(x=>x.value)}
+function showScreen(id){['loginScreen','setupScreen','appScreen'].forEach(x=>$('#'+x).classList.toggle('hidden',x!==id))}
+function status(c){return state.statuses[c.id]||'waiting'}
+function ageText(c){return `${c.years} سنة و${c.months} شهر`}
+function timeNow(){return new Date().toLocaleTimeString('ar-EG',{hour:'2-digit',minute:'2-digit',hour12:true})}
+function fullDate(){return new Date(state.setup.date+'T12:00:00').toLocaleDateString('ar-EG',{weekday:'long',day:'numeric',month:'long',year:'numeric'})}
+function toast(msg){const t=$('#toast');t.textContent=msg;t.classList.remove('hidden');clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>t.classList.add('hidden'),2800)}
+function childCard(c,extra=''){const st=status(c);return `<article class="child"><div class="child-top"><div class="child-photo">${c.emoji}</div><div><h3>${esc(c.name)}</h3><div class="age">العمر: ${ageText(c)}</div></div></div><div class="${c.allergy==='لا يوجد'?'allergy no-allergy':'allergy'}">${c.allergy==='لا يوجد'?'✓ لا توجد حساسية مسجلة':'⚠ حساسية: '+esc(c.allergy)}</div><div class="status">الحالة: ${st==='present'?'حاضر منذ '+esc(state.statusTimes[c.id]||''):st==='left'?'انصرف':'لم يصل بعد'}</div>${extra}</article>`}
+function render(){
+ const list=activeChildren();const present=list.filter(c=>status(c)==='present').length;const left=list.filter(c=>status(c)==='left').length;
+ $('#totalCount').textContent=list.length;$('#presentCount').textContent=present;$('#waitingCount').textContent=list.length-present-left;$('#leftCount').textContent=left;
+ $('#todayLabel').textContent=fullDate();$('#sessionMeta').textContent=`فصل ${state.setup.className}`;$('#classChip').textContent=`🏡 فصل ${state.setup.className}`;
+ $('#appSubtitle').textContent=`الفصل: ${state.setup.className} · المواد: ${state.setup.subjects.join('، ')}`;
+ document.querySelectorAll('[data-tab]').forEach(b=>b.classList.toggle('active',b.dataset.tab===state.tab));
+ renderTab();
+}
+function renderTab(){
+ const list=activeChildren();
+ if(state.tab==='children'){
+  $('#tabContent').innerHTML=`<section class="panel"><h2>أطفال فصل ${esc(state.setup.className)}</h2><p class="desc">نظرة سريعة على الأطفال المسجلين في الفصل. راجعي تنبيهات الحساسية قبل تقديم الوجبات أو الأنشطة.</p><div class="children">${list.map(c=>childCard(c,`<span class="live-badge">${status(c)==='present'?'● حاضر':status(c)==='left'?'تم الانصراف':'بانتظار الوصول'}</span>`)).join('')}</div></section>`;
+ }else if(state.tab==='attendance'){
+  $('#tabContent').innerHTML=`<section class="panel"><h2>تسجيل حضور الأطفال</h2><p class="desc">اضغطي على كارت الطفل لتأكيد حضوره. سيتم تسجيل الساعة والدقيقة بعد التأكيد.</p><div class="children">${list.map(c=>childCard(c,`<button class="btn ${status(c)==='present'?'secondary':''}" style="width:100%" data-action="open-attendance" data-id="${c.id}" ${status(c)!=='waiting'?'disabled':''}>${status(c)==='present'?'✓ تم تسجيل الحضور':status(c)==='left'?'تم الانصراف':'تسجيل الحضور'}</button>`)).join('')}</div></section>`;
+ }else if(state.tab==='activities'){
+  $('#tabContent').innerHTML=`<section class="panel"><div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap"><h2>حالة الأطفال والأنشطة</h2><span class="live-badge"><span class="live-dot"></span> LIVE · تحديثات تجريبية</span></div><p class="desc">اختاري الطفل ثم حددي حالته الحالية من المصطلحات الجاهزة. في النظام الفعلي ستظهر الحالة لولي الأمر المرتبط بهذا الطفل.</p><div class="children">${list.map(c=>{const a=state.activities[c.id];return childCard(c,`<div class="field"><label>الحالة الحالية</label><select data-activity-child="${c.id}" ${status(c)!=='present'?'disabled':''}><option value="">اختاري الحالة</option>${activityOptions.map(o=>`<option value="${o.id}" ${a&&a.id===o.id?'selected':''}>${o.emoji} ${o.label}</option>`).join('')}</select></div>${a?`<div class="status"><b>${a.emoji} ${esc(a.label)}</b><br>آخر تحديث: ${esc(a.time)}</div>`:'<div class="status">لم يتم تحديد نشاط حالي</div>'}`)}).join('')}</div></section>`;
+ }else{
+  $('#tabContent').innerHTML=`<section class="panel"><h2>تسجيل انصراف الأطفال</h2><p class="desc">لن يتم تسجيل الانصراف إلا بعد مراجعة اسم المستلم المعتمد والتحقق من رمز اليوم المكوّن من 4 أرقام. الرموز الظاهرة في هذا النموذج تجريبية فقط.</p><div class="children">${list.filter(c=>status(c)!=='waiting').map(c=>childCard(c,`<div class="field"><label>المستلم المعتمد</label><div style="background:#f7faf8;border:1px solid var(--line);padding:11px;border-radius:12px;font-weight:700">${esc(c.guardian)}</div></div>${status(c)==='left'?`<span class="live-badge">✓ تم التسليم ${esc(state.dismissed[c.id]?.time||'')}</span>`:`<button class="btn" style="width:100%" data-action="open-dismissal" data-id="${c.id}">مراجعة المستلم وتأكيد الانصراف</button>`}`)).join('')||'<div class="empty">لا يوجد أطفال مسجلون بالحضور حتى الآن.</div>'}</div></section>`;
+ }
+}
+function openModal(content){$('#modalRoot').innerHTML=`<div class="overlay" id="overlay"><div class="modal" role="dialog" aria-modal="true">${content}</div></div>`}
+function closeModal(){$('#modalRoot').innerHTML=''}
+function setupSummary(){
+ const cls=$('#classSelect').value,date=$('#dayDate').value,subjects=getSubjects(),img=state.setup.selfie;
+ if(!img){toast('التقطي سيلفي المعلمة أولًا');return}
+ if(!cls){toast('اختاري الفصل أولًا');return}
+ if(!date){toast('حددي تاريخ اليوم');return}
+ if(!subjects.length){toast('اختاري مادة تدريس واحدة على الأقل');return}
+ const photo=img?`<img src="${img}" alt="سيلفي المعلمة" style="width:94px;height:94px;object-fit:cover;border-radius:18px">`:'';
+ openModal(`<h2>مراجعة بيانات اليوم</h2><p>تأكدي من البيانات قبل الانتقال إلى لوحة المعلمة.</p><div style="display:flex;align-items:center;gap:14px;margin:16px 0">${photo}<div><b>سيلفي المعلمة</b><div class="status">ستكون مخصصة للإدارة فقط في النظام الفعلي.</div></div></div><div class="summary-list"><div class="summary-row"><span>المعلمة</span><b>أ. فاطمة</b></div><div class="summary-row"><span>الفصل</span><b>${esc(cls)}</b></div><div class="summary-row"><span>تاريخ اليوم</span><b>${esc(new Date(date+'T12:00:00').toLocaleDateString('ar-EG',{weekday:'long',day:'numeric',month:'long',year:'numeric'}))}</b></div><div class="summary-row"><span>مواد التدريس</span><b>${subjects.map(esc).join('، ')}</b></div></div><div class="modal-actions"><button class="btn" id="confirmSetup">متابعة إلى لوحة المعلمة</button><button class="btn secondary" id="editSetupModal">تعديل البيانات</button></div>`);
+ $('#confirmSetup').addEventListener('click',()=>{const oldKey=dayKey();state.setup={selfie:img,className:cls,date,subjects};const newKey=dayKey();const data=(()=>{try{return JSON.parse(localStorage.getItem('snabel_teacher_'+newKey))}catch{return null}})();state.statuses=data?.statuses||{};state.statusTimes=data?.statusTimes||{};state.activities=data?.activities||{};state.dismissed=data?.dismissed||{};closeModal();showScreen('appScreen');render();toast('تم تأكيد بيانات اليوم')});
+ $('#editSetupModal').addEventListener('click',closeModal);
+}
+function openAttendance(c){
+ if(status(c)!=='waiting'){toast('تم تسجيل حالة الطفل بالفعل');return}
+ openModal(`<h2>تأكيد حضور الطفل</h2><p>هل تؤكدين تسجيل حضور الطفل التالي؟</p><div class="child-top" style="margin:18px 0"><div class="child-photo">${c.emoji}</div><div><h3>${esc(c.name)}</h3><div class="age">العمر: ${ageText(c)}</div><div class="${c.allergy==='لا يوجد'?'allergy no-allergy':'allergy'}" style="margin-top:8px">${c.allergy==='لا يوجد'?'✓ لا توجد حساسية مسجلة':'⚠ حساسية: '+esc(c.allergy)}</div></div></div><div class="modal-actions"><button class="btn" id="confirmAttendance">تأكيد الحضور</button><button class="btn secondary" id="cancelAttendance">إلغاء</button></div>`);
+ $('#confirmAttendance').addEventListener('click',()=>{state.statuses[c.id]='present';state.statusTimes[c.id]=timeNow();saveDay();closeModal();render();toast(`تم تسجيل حضور ${c.name} الساعة ${state.statusTimes[c.id]}`)});
+ $('#cancelAttendance').addEventListener('click',closeModal);
+}
+function openDismissal(c){
+ if(status(c)!=='present'){toast('يجب تسجيل حضور الطفل أولًا');return}
+ const dailyCode=String(1000+((Number(state.setup.date.replaceAll('-',''))+parseInt(c.id.slice(1),10)*37)%9000));
+ openModal(`<h2>تأكيد استلام ${esc(c.name)}</h2><p>راجعي اسم المستلم المعتمد، ثم أدخلي رمز اليوم الذي يظهر في حساب ولي الأمر.</p><div class="summary-list"><div class="summary-row"><span>اسم الطفل</span><b>${esc(c.name)}</b></div><div class="summary-row"><span>المستلم المعتمد</span><b>${esc(c.guardian)}</b></div><div class="summary-row"><span>الحالة</span><b>حاضر داخل الحضانة</b></div></div><div class="field"><label for="pickupCode">رمز الاستلام (4 أرقام)</label><input id="pickupCode" inputmode="numeric" maxlength="4" placeholder="أدخلي الرمز الذي يقدمه المستلم"></div><div class="demo-note">رمز العرض التجريبي لهذا الطفل اليوم: <b>${dailyCode}</b><br>في التطبيق الفعلي يتغير الرمز يوميًا ويظهر في حساب ولي الأمر فقط، ولا يُعرض للمعلمة.</div><div id="pickupError" class="login-error"></div><div class="modal-actions"><button class="btn" id="confirmDismissal">التحقق وتأكيد الانصراف</button><button class="btn secondary" id="cancelDismissal">إلغاء</button></div>`);
+ $('#confirmDismissal').addEventListener('click',()=>{const entered=$('#pickupCode').value.trim();if(!/^\d{4}$/.test(entered)){ $('#pickupError').textContent='أدخلي رمزًا مكوّنًا من 4 أرقام.';return}if(entered!==dailyCode){$('#pickupError').textContent='الرمز غير صحيح. راجعي ولي الأمر أو الإدارة.';return}state.statuses[c.id]='left';state.dismissed[c.id]={guardian:c.guardian,time:timeNow()};saveDay();closeModal();render();toast(`تم تسليم ${c.name} إلى ${c.guardian}`)});
+ $('#cancelDismissal').addEventListener('click',closeModal);
+}
+$('#loginForm').addEventListener('submit',e=>{e.preventDefault();const u=$('#username').value.trim().toLowerCase(),p=$('#password').value;if((u===DEMO_USER||u==='فاطمة')&&p===DEMO_PASS){$('#loginError').textContent='';setUpDefault();showScreen('setupScreen')}else $('#loginError').textContent='اسم المستخدم أو كلمة المرور غير صحيحة.'});
+$('#takeSelfie').addEventListener('click',()=>$('#selfieInput').click());
+$('#selfieInput').addEventListener('change',e=>{const file=e.target.files?.[0];if(!file)return;if(!file.type.startsWith('image/')){toast('اختاري ملف صورة');return}const reader=new FileReader();reader.onload=()=>{state.setup.selfie=reader.result;$('#selfiePreview').src=reader.result;$('#selfiePreview').classList.remove('hidden');$('#selfiePlaceholder').classList.add('hidden')};reader.readAsDataURL(file)});
+$('#dayDate').addEventListener('change',()=>$('#setupDateLabel').textContent=$('#dayDate').value?new Date($('#dayDate').value+'T12:00:00').toLocaleDateString('ar-EG',{weekday:'long',day:'numeric',month:'long',year:'numeric'}):'');
+$('#setupForm').addEventListener('submit',e=>{e.preventDefault();setupSummary()});
+$('#setupLogout').addEventListener('click',()=>{showScreen('loginScreen');$('#password').value=''});
+$('#editSetup').addEventListener('click',()=>{closeModal();$('#classSelect').value=state.setup.className;$('#dayDate').value=state.setup.date;document.querySelectorAll('#subjectsList input').forEach(x=>x.checked=state.setup.subjects.includes(x.value));if(state.setup.selfie){$('#selfiePreview').src=state.setup.selfie;$('#selfiePreview').classList.remove('hidden');$('#selfiePlaceholder').classList.add('hidden')}showScreen('setupScreen')});
+$('#logoutBtn').addEventListener('click',()=>{showScreen('loginScreen');$('#password').value='';closeModal()});
+document.addEventListener('click',e=>{
+ const tab=e.target.closest('[data-tab]');if(tab){state.tab=tab.dataset.tab;render();return}
+ if(e.target.id==='overlay'){closeModal();return}
+ const b=e.target.closest('[data-action]');if(!b)return;
+ const c=activeChildren().find(x=>x.id===b.dataset.id);if(!c)return;
+ if(b.dataset.action==='open-attendance')openAttendance(c);
+ if(b.dataset.action==='open-dismissal')openDismissal(c);
+});
+document.addEventListener('change',e=>{const id=e.target.dataset.activityChild;if(!id)return;const c=activeChildren().find(x=>x.id===id);if(!c)return;if(status(c)!=='present'){toast('يجب تسجيل حضور الطفل أولًا');return}const a=activityOptions.find(x=>x.id===e.target.value);if(!a){delete state.activities[id]}else state.activities[id]={id:a.id,emoji:a.emoji,label:a.label,time:timeNow()};saveDay();renderTab();if(a)toast(`تم تحديث حالة ${c.name}: ${a.label}`)});
+$('#dayDate').value=todayISO();
+</script>
+</body>
+</html>
