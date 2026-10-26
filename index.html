@@ -46,6 +46,12 @@ body{background:#fff9f1;color:var(--ink)}
 @media(max-width:720px){.app-shell{display:flex;flex-direction:column}.sidebar{position:relative;top:auto;height:auto;min-height:0;padding:12px 14px 10px;border-left:0;border-bottom:1px solid #eee8f6}.sidebar-brand{padding:0 2px 12px}.sidebar-brand .brand-mark{width:40px;height:40px;font-size:23px}.sidebar-brand b{font-size:16px}.sidebar-label,.sidebar-spacer,.sidebar-help,.sidebar-profile,.side-action{display:none}.side-nav{display:flex;gap:7px;overflow-x:auto;padding:0 0 3px}.side-link{min-width:max-content;width:auto;padding:7px 10px;gap:6px;font-size:11px}.nav-emoji{width:28px;height:28px;font-size:15px}.nav-arrow{display:none}.app-main{padding:19px 13px}.app-header{align-items:flex-start;flex-direction:column;margin-bottom:18px}.header-date{min-width:0;padding:8px 11px}.stats{grid-template-columns:repeat(2,minmax(0,1fr));margin-bottom:22px}.stat{border-radius:17px}.stat strong{font-size:24px}.section-heading h2{font-size:16px}.section-heading p{max-width:230px;line-height:1.8}.class-chip{font-size:10px;padding:8px}.children{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:420px){.side-link{flex:1;min-width:0;justify-content:center;flex-direction:column;padding:7px 3px;gap:3px}.side-link span:nth-child(2){font-size:10px}.children{grid-template-columns:1fr}.stat{padding:12px 10px}.stat small{white-space:normal}.app-header h1{font-size:25px}}
 
+
+/* Bulk activity selection */
+.activity-bulk-box{background:#fffdf8;border:1px solid #eee6f7;border-radius:20px;padding:16px;margin-top:16px}
+.bulk-top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.bulk-top b,.bulk-step-title{display:block;color:#45415e;font-weight:800}.bulk-top small{display:block;color:#8b849e;font-size:12px;margin-top:3px}.bulk-count{display:inline-block;background:#f0efff;color:#5d61b9;border-radius:12px;padding:7px 11px;font-size:12px;margin:14px 0}.bulk-count strong{font-size:15px}.activity-select-row{display:flex;align-items:center;gap:8px;margin-top:12px;padding:10px 11px;border:1px solid #e8e5fb;background:#f8f7ff;border-radius:12px;font-size:12px;font-weight:800;color:#5556a2;cursor:pointer}.activity-select-row input{width:19px;height:19px;accent-color:#697be0}.activity-select-row.is-disabled{opacity:.55;cursor:not-allowed;background:#f7f6f4;border-color:#eee}.current-activity{background:#f0f9f0;border-radius:10px;padding:8px;margin-top:9px}.bulk-activity-control{margin-top:16px;border:1px solid #f5e4d1;background:#fff8ed;border-radius:20px;padding:17px}.bulk-step-title{margin-bottom:6px}.bulk-hint{font-size:12px;color:#89819b;margin:10px 0 0;line-height:1.8}
+@media(max-width:560px){.bulk-top{align-items:flex-start}.bulk-top .btn{padding:9px 11px;font-size:12px}.activity-bulk-box,.bulk-activity-control{padding:12px}.activity-select-row{font-size:11px}}
+
 </style>
 </head>
 <body>
@@ -156,7 +162,7 @@ const activityOptions=[
  {id:'outdoor',emoji:'🌳',label:'في النشاط الخارجي الآن'},
  {id:'done',emoji:'⭐',label:'أنهى النشاط بنجاح'}
 ];
-const state={tab:'children',setup:{selfie:'',className:'',date:'',subjects:[]},statuses:{},statusTimes:{},activities:{},dismissed:{},modalChild:null};
+const state={tab:'children',setup:{selfie:'',className:'',date:'',subjects:[]},statuses:{},statusTimes:{},activities:{},dismissed:{},modalChild:null,activitySelected:[],activityPending:null,activityChoice:''};
 const $=s=>document.querySelector(s);
 const todayISO=()=>{const d=new Date();return new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,10)};
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -188,7 +194,13 @@ function renderTab(){
  }else if(state.tab==='attendance'){
   $('#tabContent').innerHTML=`<section class="panel"><h2>تسجيل حضور الأطفال</h2><p class="desc">اضغطي على كارت الطفل لتأكيد حضوره. سيتم تسجيل الساعة والدقيقة بعد التأكيد.</p><div class="children">${list.map(c=>childCard(c,`<button class="btn ${status(c)==='present'?'secondary':''}" style="width:100%" data-action="open-attendance" data-id="${c.id}" ${status(c)!=='waiting'?'disabled':''}>${status(c)==='present'?'✓ تم تسجيل الحضور':status(c)==='left'?'تم الانصراف':'تسجيل الحضور'}</button>`)).join('')}</div></section>`;
  }else if(state.tab==='activities'){
-  $('#tabContent').innerHTML=`<section class="panel"><div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap"><h2>حالة الأطفال والأنشطة</h2><span class="live-badge"><span class="live-dot"></span> LIVE · تحديثات تجريبية</span></div><p class="desc">اختاري الطفل ثم حددي حالته الحالية من المصطلحات الجاهزة. في النظام الفعلي ستظهر الحالة لولي الأمر المرتبط بهذا الطفل.</p><div class="children">${list.map(c=>{const a=state.activities[c.id];return childCard(c,`<div class="field"><label>الحالة الحالية</label><select data-activity-child="${c.id}" ${status(c)!=='present'?'disabled':''}><option value="">اختاري الحالة</option>${activityOptions.map(o=>`<option value="${o.id}" ${a&&a.id===o.id?'selected':''}>${o.emoji} ${o.label}</option>`).join('')}</select></div>${a?`<div class="status"><b>${a.emoji} ${esc(a.label)}</b><br>آخر تحديث: ${esc(a.time)}</div>`:'<div class="status">لم يتم تحديد نشاط حالي</div>'}`)}).join('')}</div></section>`;
+  const presentList=list.filter(c=>status(c)==='present');
+  const selected=state.activitySelected.filter(id=>presentList.some(c=>c.id===id));
+  state.activitySelected=selected;
+  $('#tabContent').innerHTML=`<section class="panel"><div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap"><h2>تحديث نشاط لمجموعة أطفال</h2><span class="live-badge"><span class="live-dot"></span> تحديثات تجريبية</span></div><p class="desc">اختاري نوع النشاط من القائمة الموحدة بالأعلى، ثم حددي طفلًا أو أكثر يشاركون في النشاط نفسه، واضغطي تأكيد.</p>
+  <div class="bulk-activity-control" style="margin-top:12px"><div class="bulk-step-title">① اختاري النشاط أولًا</div><div class="field"><label for="bulkActivitySelect">نوع النشاط</label><select id="bulkActivitySelect"><option value="">اختاري نشاطًا واحدًا للمجموعة</option>${activityOptions.map(o=>`<option value="${o.id}" ${state.activityChoice===o.id?'selected':''}>${o.emoji} ${o.label}</option>`).join('')}</select></div><p class="bulk-hint">هذا الاختيار سيُطبّق على كل الأطفال الذين ستحددينهم بالأسفل.</p></div>
+  <div class="activity-bulk-box"><div class="bulk-top"><div><b>② حددي الأطفال</b><small>يمكن اختيار طفل واحد أو أكثر — الحاضرون فقط</small></div><button class="btn secondary" type="button" data-action="select-all-activities">تحديد كل الحاضرين</button></div><div class="bulk-count">تم تحديد <strong>${selected.length}</strong> طفل</div><div class="children">${list.map(c=>{const a=state.activities[c.id];const canSelect=status(c)==='present';return childCard(c,`<label class="activity-select-row ${!canSelect?'is-disabled':''}"><input type="checkbox" data-activity-select="${c.id}" ${selected.includes(c.id)?'checked':''} ${!canSelect?'disabled':''}><span>${!canSelect?'يجب تسجيل الحضور أولًا':selected.includes(c.id)?'✓ تم تحديد الطفل':'Select — تحديد الطفل'}</span></label>${a?`<div class="status current-activity"><b>النشاط المسجل: ${a.emoji} ${esc(a.label)}</b><br>آخر تحديث: ${esc(a.time)}</div>`:'<div class="status">لم يتم تسجيل نشاط لهذا الطفل اليوم</div>'}`)}).join('')}</div></div>
+  <div style="margin-top:16px"><button class="btn full" type="button" data-action="review-bulk-activity" ${selected.length?'':'disabled'}>تأكيد النشاط للأطفال المحددين</button><p class="bulk-hint">قبل الحفظ ستظهر نافذة لمراجعة أسماء الأطفال والنشاط المختار.</p></div></section>`;
  }else{
   $('#tabContent').innerHTML=`<section class="panel"><h2>تسجيل انصراف الأطفال</h2><p class="desc">لن يتم تسجيل الانصراف إلا بعد مراجعة اسم المستلم المعتمد والتحقق من رمز اليوم المكوّن من 4 أرقام. الرموز الظاهرة في هذا النموذج تجريبية فقط.</p><div class="children">${list.filter(c=>status(c)!=='waiting').map(c=>childCard(c,`<div class="field"><label>المستلم المعتمد</label><div style="background:#f7faf8;border:1px solid var(--line);padding:11px;border-radius:12px;font-weight:700">${esc(c.guardian)}</div></div>${status(c)==='left'?`<span class="live-badge">✓ تم التسليم ${esc(state.dismissed[c.id]?.time||'')}</span>`:`<button class="btn" style="width:100%" data-action="open-dismissal" data-id="${c.id}">مراجعة المستلم وتأكيد الانصراف</button>`}`)).join('')||'<div class="empty">لا يوجد أطفال مسجلون بالحضور حتى الآن.</div>'}</div></section>`;
  }
@@ -230,12 +242,31 @@ $('#logoutBtn').addEventListener('click',()=>{showScreen('loginScreen');$('#pass
 document.addEventListener('click',e=>{
  const tab=e.target.closest('[data-tab]');if(tab){state.tab=tab.dataset.tab;render();return}
  if(e.target.id==='overlay'){closeModal();return}
+ if(e.target.id==='cancelBulkActivity'){state.activityPending=null;closeModal();return}
+ if(e.target.id==='confirmBulkActivityApply'){
+  const pending=state.activityPending;if(!pending)return;
+  const a=activityOptions.find(o=>o.id===pending.activityId);if(!a){toast('اختاري النشاط المطلوب');return}
+  const now=timeNow();pending.ids.forEach(id=>{const c=activeChildren().find(x=>x.id===id);if(c&&status(c)==='present')state.activities[id]={id:a.id,emoji:a.emoji,label:a.label,time:now}});
+  const count=pending.ids.filter(id=>{const c=activeChildren().find(x=>x.id===id);return c&&status(c)==='present'}).length;
+  state.activitySelected=[];state.activityChoice='';state.activityPending=null;saveDay();closeModal();renderTab();toast(`تم تسجيل نشاط «${a.label}» لـ ${count} طفل`);return;
+ }
  const b=e.target.closest('[data-action]');if(!b)return;
+ if(b.dataset.action==='select-all-activities'){state.activitySelected=activeChildren().filter(c=>status(c)==='present').map(c=>c.id);renderTab();return}
+ if(b.dataset.action==='review-bulk-activity'){
+  const ids=state.activitySelected.filter(id=>{const c=activeChildren().find(x=>x.id===id);return c&&status(c)==='present'});const a=activityOptions.find(o=>o.id===state.activityChoice);
+  if(!ids.length){toast('حددي طفلًا واحدًا على الأقل');return}if(!a){toast('اختاري نوع النشاط أولًا');return}
+  state.activityPending={ids,activityId:a.id};const names=ids.map(id=>activeChildren().find(c=>c.id===id)?.name).filter(Boolean);
+  openModal(`<h2>تأكيد النشاط للمجموعة</h2><p>سيتم تسجيل النشاط التالي للأطفال المحددين. راجعي البيانات قبل التأكيد.</p><div class="summary-list"><div class="summary-row"><span>النشاط</span><b>${a.emoji} ${esc(a.label)}</b></div><div class="summary-row"><span>عدد الأطفال</span><b>${names.length}</b></div><div class="summary-row"><span>الأطفال</span><b>${names.map(esc).join('، ')}</b></div><div class="summary-row"><span>وقت التسجيل</span><b>${esc(timeNow())}</b></div></div><div class="modal-actions"><button class="btn" id="confirmBulkActivityApply">تأكيد وتسجيل النشاط</button><button class="btn secondary" id="cancelBulkActivity">رجوع للتعديل</button></div>`);return;
+ }
+ if(b.dataset.action==='cancel-bulk-activity'){closeModal();return}
  const c=activeChildren().find(x=>x.id===b.dataset.id);if(!c)return;
  if(b.dataset.action==='open-attendance')openAttendance(c);
  if(b.dataset.action==='open-dismissal')openDismissal(c);
 });
-document.addEventListener('change',e=>{const id=e.target.dataset.activityChild;if(!id)return;const c=activeChildren().find(x=>x.id===id);if(!c)return;if(status(c)!=='present'){toast('يجب تسجيل حضور الطفل أولًا');return}const a=activityOptions.find(x=>x.id===e.target.value);if(!a){delete state.activities[id]}else state.activities[id]={id:a.id,emoji:a.emoji,label:a.label,time:timeNow()};saveDay();renderTab();if(a)toast(`تم تحديث حالة ${c.name}: ${a.label}`)});
+document.addEventListener('change',e=>{
+ if(e.target.id==='bulkActivitySelect'){state.activityChoice=e.target.value;return}
+ const selectedId=e.target.dataset.activitySelect;if(selectedId){if(e.target.checked){if(!state.activitySelected.includes(selectedId))state.activitySelected.push(selectedId)}else state.activitySelected=state.activitySelected.filter(id=>id!==selectedId);renderTab();return}
+});
 $('#dayDate').value=todayISO();
 </script>
 </body>
